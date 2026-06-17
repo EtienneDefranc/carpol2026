@@ -10,7 +10,7 @@ export default async function RoutinesPage() {
       <div>
         <h1 className="text-3xl font-extrabold text-white mb-2">Mis Rutinas</h1>
         <p className="text-gray-400">
-          Registra tus horarios de clases. El sistema automáticamente generará los viajes correspondientes cada semana para realizar los "Matches".
+          Registra tus horarios de clases. El sistema automáticamente generará los viajes correspondientes cada semana para realizar los &quot;Matches&quot;.
         </p>
       </div>
 
