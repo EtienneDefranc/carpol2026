@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { ShieldCheck, CalendarClock, CreditCard, ShieldAlert } from 'lucide-react';
@@ -36,10 +37,12 @@ export default function Home() {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 animate-slide-up" style={{ animationDelay: '0.4s' }}>
-          <Button variant="primary" className="text-lg font-semibold">
-            Empezar Ahora
-          </Button>
-          <Button variant="secondary" className="text-lg font-semibold">
+          <Link href="/dashboard">
+            <Button variant="primary" className="text-lg font-semibold w-full sm:w-auto">
+              Empezar Ahora
+            </Button>
+          </Link>
+          <Button variant="secondary" className="text-lg font-semibold w-full sm:w-auto">
             Saber Más
           </Button>
         </div>
