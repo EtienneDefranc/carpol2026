@@ -40,9 +40,19 @@ export function SearchClient() {
   };
 
   // Cargar rutinas iniciales al montar el componente
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    handleSearch({});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const load = async () => {
+      try {
+        const routines = await searchDriverRoutines({});
+        setResults(routines);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    load();
   }, []);
 
   const onSubmit = (e: React.FormEvent) => {
@@ -83,8 +93,12 @@ export function SearchClient() {
       setSelectedDate("");
       // Refrescar resultados
       handleSearch(filters);
-    } catch (error: any) {
-      alert(error.message || "Ocurrió un error al reservar");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("Ocurrió un error al reservar");
+      }
     } finally {
       setIsBooking(false);
     }
