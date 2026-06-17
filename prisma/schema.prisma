@@ -78,6 +78,7 @@ model Routine {
   destination   String
   departureTime String    // Formato "HH:MM" (ej. "07:30")
   seats         Int       // Cupos ofrecidos o requeridos
+  price         Float     @default(1.50) // Precio establecido por el conductor
   isActive      Boolean   @default(true)
   
   createdAt     DateTime  @default(now())
@@ -94,6 +95,7 @@ model Ride {
   departureTime DateTime
   availableSeats Int
   price         Float
+  routineId     String?
   
   bookings      Booking[]
   status        RideStatus @default(SCHEDULED)

@@ -25,6 +25,7 @@ export async function createRoutine(data: {
   destination: string;
   departureTime: string;
   seats: number;
+  price: number;
 }) {
   const session = await getServerSession(authOptions);
   if (!session || !session.user || !session.user.email) {
@@ -43,6 +44,7 @@ export async function createRoutine(data: {
       destination: data.destination,
       departureTime: data.departureTime,
       seats: data.seats,
+      price: data.price,
     },
   });
 

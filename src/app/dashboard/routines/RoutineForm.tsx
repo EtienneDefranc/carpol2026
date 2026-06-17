@@ -22,6 +22,7 @@ export function RoutineForm() {
   const [destination, setDestination] = useState("");
   const [departureTime, setDepartureTime] = useState("");
   const [seats, setSeats] = useState(1);
+  const [price, setPrice] = useState(1.50);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const toggleDay = (dayId: number) => {
@@ -36,12 +37,13 @@ export function RoutineForm() {
     
     setIsSubmitting(true);
     try {
-      await createRoutine({ role, daysOfWeek, origin, destination, departureTime, seats });
+      await createRoutine({ role, daysOfWeek, origin, destination, departureTime, seats, price });
       // Reset form
       setOrigin("");
       setDestination("");
       setDepartureTime("");
       setDaysOfWeek([]);
+      setPrice(1.50);
       alert("Rutina guardada con éxito");
     } catch (error) {
       console.error(error);
@@ -149,6 +151,25 @@ export function RoutineForm() {
             />
           </div>
         </div>
+
+        {role === "DRIVER" && (
+          <div>
+            <label className="block text-sm font-medium text-gray-400 mb-2">Precio por pasajero ($)</label>
+            <div className="relative">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-gray-400">$</span>
+              <input 
+                type="number" 
+                required
+                min={0}
+                step={0.10}
+                value={price}
+                onChange={(e) => setPrice(Number(e.target.value))}
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:border-brand/50 outline-none"
+                placeholder="Ej. 1.50"
+              />
+            </div>
+          </div>
+        )}
 
         <Button type="submit" variant="primary" className="w-full" disabled={isSubmitting}>
           {isSubmitting ? "Guardando..." : "Guardar Rutina Semanal"}
