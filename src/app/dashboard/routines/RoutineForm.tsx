@@ -87,10 +87,10 @@ export function RoutineForm() {
                 key={day.id}
                 type="button"
                 onClick={() => toggleDay(day.id)}
-                className={`w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all ${
+                className={`w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all cursor-pointer ${
                   daysOfWeek.includes(day.id) 
-                    ? "bg-neon-cyan text-black shadow-[0_0_10px_rgba(6,182,212,0.5)]" 
-                    : "bg-white/5 text-gray-400 hover:bg-white/10"
+                    ? "bg-neon-cyan text-black shadow-[0_0_10px_rgba(6,182,212,0.5)] cursor-pointer" 
+                    : "bg-white/5 text-gray-400 hover:bg-white/10 cursor-pointer"
                 }`}
               >
                 {day.label}
