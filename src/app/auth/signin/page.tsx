@@ -1,10 +1,35 @@
 "use client";
 
+import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { Mail, CheckCircle2 } from "lucide-react";
 
 export default function SignInPage() {
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.endsWith("@espol.edu.ec")) {
+      alert("Por favor, ingresa tu correo institucional de ESPOL (@espol.edu.ec).");
+      return;
+    }
+    
+    setIsSubmitting(true);
+    try {
+      await signIn("email", { email, redirect: false, callbackUrl: "/dashboard" });
+      setIsSuccess(true);
+    } catch (error) {
+      console.error(error);
+      alert("Ocurrió un error al enviar el correo. Inténtalo de nuevo.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-black relative overflow-hidden">
       {/* Background Glow */}
@@ -23,24 +48,43 @@ export default function SignInPage() {
           Inicia sesión usando tu correo institucional de ESPOL.
         </p>
 
-        <Button 
-          variant="primary" 
-          className="w-full text-base py-4 flex items-center justify-center gap-3"
-          onClick={() => signIn("azure-ad", { callbackUrl: "/dashboard" })}
-        >
-          {/* Microsoft Icon */}
-          <svg viewBox="0 0 21 21" className="w-5 h-5 bg-white p-0.5 rounded-sm">
-            <rect x="1" y="1" width="9" height="9" fill="#f25022"/>
-            <rect x="11" y="1" width="9" height="9" fill="#7fba00"/>
-            <rect x="1" y="11" width="9" height="9" fill="#00a4ef"/>
-            <rect x="11" y="11" width="9" height="9" fill="#ffb900"/>
-          </svg>
-          Ingresar con Outlook
-        </Button>
+        {isSuccess ? (
+          <div className="flex flex-col items-center text-center space-y-4 animate-fade-in py-4">
+            <CheckCircle2 className="w-16 h-16 text-green-400" />
+            <h2 className="text-xl font-bold text-white">¡Revisa tu bandeja de entrada!</h2>
+            <p className="text-gray-400 text-sm">
+              Te hemos enviado un enlace mágico a <strong>{email}</strong>. 
+              Haz clic en el enlace para entrar de forma segura sin contraseña.
+            </p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="w-full space-y-4">
+            <div className="relative">
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input 
+                type="email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="usuario@espol.edu.ec" 
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white placeholder:text-gray-500 focus:outline-none focus:border-brand/50 transition-colors"
+                required
+              />
+            </div>
+            
+            <Button 
+              type="submit"
+              variant="primary" 
+              className="w-full text-base py-4 flex items-center justify-center gap-3"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Enviando enlace..." : "Recibir enlace de acceso"}
+            </Button>
 
-        <div className="mt-6 text-xs text-gray-500 text-center">
-          Al iniciar sesión, aceptas usar únicamente correos con el dominio @espol.edu.ec
-        </div>
+            <div className="mt-6 text-xs text-gray-500 text-center">
+              Asegúrate de revisar tu carpeta de Spam si no lo encuentras en unos segundos.
+            </div>
+          </form>
+        )}
       </Card>
     </div>
   );
