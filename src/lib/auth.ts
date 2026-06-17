@@ -12,7 +12,6 @@ const prismaAdapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter: prismaAdapter });
 
 export const authOptions: NextAuthOptions = {
-  // @ts-expect-error - PrismaAdapter compatibility with NextAuth v4
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
