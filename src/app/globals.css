@@ -1,26 +1,60 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  --color-brand: #8b5cf6; /* Violet 500 */
+  --color-brand-hover: #7c3aed; /* Violet 600 */
+  --color-brand-light: #a78bfa; /* Violet 400 */
+  --color-neon-cyan: #06b6d4; /* Cyan 500 */
+  --color-neon-pink: #ec4899; /* Pink 500 */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --animate-fade-in: fade-in 1s ease-out forwards;
+  --animate-slide-up: slide-up 0.8s ease-out forwards;
+  --animate-pulse-slow: pulse-slow 4s infinite alternate;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse-slow {
+    from { opacity: 0.8; transform: scale(1); }
+    to { opacity: 1; transform: scale(1.05); }
+  }
+}
+
+:root {
+  --background: #09090b; /* Deep dark background */
+  --foreground: #fafafa;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism utilities */
+@layer utilities {
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .glass-card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  }
+
+  .text-glow {
+    text-shadow: 0 0 10px rgba(139, 92, 246, 0.5), 0 0 20px rgba(139, 92, 246, 0.3);
+  }
 }
