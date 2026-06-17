@@ -2,15 +2,16 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Calendar, Search, Wallet, LogOut } from 'lucide-react';
+import { Home, Compass, PlusCircle, LogOut, Map, Wallet } from 'lucide-react';
 import { signOut } from 'next-auth/react';
 import { twMerge } from 'tailwind-merge';
 
-const navigation = [
-  { name: 'Inicio', href: '/dashboard', icon: Home },
-  { name: 'Mis Rutinas', href: '/dashboard/routines', icon: Calendar },
-  { name: 'Explorar Viajes', href: '/dashboard/explore', icon: Search },
-  { name: 'Billetera', href: '/wallet', icon: Wallet },
+const LINKS = [
+  { name: "Inicio", href: "/dashboard", icon: Home },
+  { name: "Mis Rutinas", href: "/dashboard/routines", icon: PlusCircle },
+  { name: "Explorar", href: "/dashboard/explore", icon: Compass },
+  { name: "Mis Viajes", href: "/dashboard/trips", icon: Map },
+  { name: "Billetera", href: "/dashboard/wallet", icon: Wallet },
 ];
 
 export function Sidebar() {
@@ -26,7 +27,7 @@ export function Sidebar() {
       </div>
 
       <nav className="flex-1 px-4 space-y-2 mt-4">
-        {navigation.map((item) => {
+        {LINKS.map((item) => {
           const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== '/dashboard');
           const Icon = item.icon;
           return (
