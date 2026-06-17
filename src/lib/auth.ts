@@ -2,8 +2,14 @@ import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
+import { Pool } from 'pg';
+import { PrismaPg } from '@prisma/adapter-pg';
 
-const prisma = new PrismaClient();
+const connectionString = `${process.env.DATABASE_URL}`;
+const pool = new Pool({ connectionString });
+const prismaAdapter = new PrismaPg(pool);
+
+const prisma = new PrismaClient({ adapter: prismaAdapter });
 
 export const authOptions: NextAuthOptions = {
   // @ts-ignore - PrismaAdapter compatibility with NextAuth v4
