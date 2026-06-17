@@ -49,6 +49,7 @@ export async function createRoutine(data: {
   });
 
   revalidatePath("/dashboard/routines");
+  revalidatePath("/dashboard");
 }
 
 export async function deleteRoutine(routineId: string) {
@@ -67,4 +68,5 @@ export async function deleteRoutine(routineId: string) {
 
   await prisma.routine.delete({ where: { id: routineId } });
   revalidatePath("/dashboard/routines");
+  revalidatePath("/dashboard");
 }
