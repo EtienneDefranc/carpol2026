@@ -2,6 +2,8 @@
 
 import { prisma } from "@/lib/prisma";
 
+import { Prisma } from "@prisma/client";
+
 export type SearchFilters = {
   origin?: string;
   destination?: string;
@@ -10,7 +12,7 @@ export type SearchFilters = {
 
 export async function searchDriverRoutines(filters: SearchFilters) {
   // Construir condiciones de búsqueda dinámicas
-  const whereClause: any = {
+  const whereClause: Prisma.RoutineWhereInput = {
     role: "DRIVER",
     isActive: true,
   };

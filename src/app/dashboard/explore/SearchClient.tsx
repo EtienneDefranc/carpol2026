@@ -27,11 +27,6 @@ export function SearchClient() {
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [isBooking, setIsBooking] = useState(false);
 
-  // Cargar rutinas iniciales al montar el componente
-  useEffect(() => {
-    handleSearch({});
-  }, []);
-
   const handleSearch = async (currentFilters: SearchFilters) => {
     setIsLoading(true);
     try {
@@ -43,6 +38,12 @@ export function SearchClient() {
       setIsLoading(false);
     }
   };
+
+  // Cargar rutinas iniciales al montar el componente
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    handleSearch({});
+  }, []);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
